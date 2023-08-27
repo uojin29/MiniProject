@@ -15,17 +15,23 @@ import java.util.List;
 public class StudentsService {
     private final StudentsRepository studentsRepository;
 
-    public Students create(Students students){
+    public Students create(StudentsRequest request){
+        Students students = Students.builder()
+                .studentId(request.getStudentId())
+                .name(request.getName())
+                .department(request.getDepartment())
+                .campName(request.getCampName())
+                .build();
         studentsRepository.save(students);
         return students;
     }
-//    public Students findById(Long id){
-//        Students students = studentsRepository.findById(id).get();
-//        return students;
-//    }
+    public Students findById(Long id){
+        Students students = studentsRepository.findById(id).get();
+        return students;
+    }
 
-    public Students findByCampName(String campName){
-        Students students = studentsRepository.findByCampName(campName);
+    public List<Students> findAllByCampName(String campName){
+        List<Students> students = studentsRepository.findAllByCampName(campName);
         return students;
     }
 
@@ -33,14 +39,14 @@ public class StudentsService {
         return studentsRepository.findAll();
     }
 
-    public Students update(String campName, StudentsRequest request){
-        Students students = studentsRepository.findByCampName(campName);
+    public Students update(Long id, StudentsRequest request){
+        Students students = studentsRepository.findById(id).get();
         students.update(request);
         studentsRepository.save(students);
         return students;
     }
 
-    public void delete(String campName){
-        studentsRepository.deleteByCampName(campName);
+    public void delete(Long id){
+        studentsRepository.deleteById(id);
     }
 }

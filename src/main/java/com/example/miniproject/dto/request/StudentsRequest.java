@@ -8,6 +8,4 @@ public class StudentsRequest {
     private String name;
     private String department;
     private String campName;
-    private String startDate;
-    private String finishDate;
 }

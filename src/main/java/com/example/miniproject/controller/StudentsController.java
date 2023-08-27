@@ -11,47 +11,53 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class StudentsController {
     private final StudentsService studentsService;
 
-    @PostMapping("/camp")
-    public Students students(@RequestBody StudentsRequest request){
-        Students students = Students.builder()
-                .studentId(request.getStudentId())
-                .name(request.getName())
-                .department(request.getDepartment())
-                .campName(request.getCampName())
-                .startDate(request.getStartDate())
-                .finishDate(request.getFinishDate())
-                .build();
-        studentsService.create(students);
-        return students;
+    @PostMapping("/student")
+    public void students(@RequestBody StudentsRequest request){
+        studentsService.create(request);
     }
 //    @PostMapping("/camp/{id}")
-//    public Students findById(@PathVariable Long id){
+//    public Students findById(@RequestParam Int id){
 //        Students students = studentsService.findById(id);
 //        return students;
 //    }
-    @PostMapping("/camp/{campName}")
-    public Students findByName(@PathVariable String campName){
-        Students students = studentsService.findByCampName(campName);
+    @GetMapping("/student/{id}")
+    public Students findById(@PathVariable Long id){
+        Students students = studentsService.findById(id);
         return students;
     }
-    @PostMapping("/camp/list")
+    @PostMapping("/student/{campName}")
+    public List<Students> findByName(@PathVariable String campName){
+        List<Students> students = studentsService.findAllByCampName(campName);
+        return students;
+    }
+    @PostMapping("/student/list")
     public ResponseEntity<List<Students>> findAll(){
         return ResponseEntity.ok(studentsService.findAll());
     }
 
-    @PatchMapping("/camp/{campName}")
-    public ResponseEntity<Students> update(@PathVariable String campName, @RequestBody StudentsRequest request){
-        return ResponseEntity.ok(studentsService.update(campName, request));
+//    @PatchMapping("/student/{campName}")
+//    public ResponseEntity<Students> update(@PathVariable String campName, @RequestBody StudentsRequest request){
+//        return ResponseEntity.ok(studentsService.update(campName, request));
+//    }
+    @PatchMapping("/student/{id}")
+    public ResponseEntity<Students> update(@PathVariable Long id, @RequestBody StudentsRequest request){
+        return ResponseEntity.ok(studentsService.update(id, request));
     }
 
-    @DeleteMapping("/camp/{campName}")
-    public ResponseEntity<String> delete(@PathVariable String campName){
-        studentsService.delete(campName);
-        return ResponseEntity.ok(campName);
+    @DeleteMapping("/student/{id}")
+    public ResponseEntity<Long> delete(@PathVariable Long id){
+        studentsService.delete(id);
+        return ResponseEntity.ok(id);
     }
+//    @DeleteMapping("/camp/{campName}")
+//    public ResponseEntity<String> delete(@PathVariable String campName){
+//        studentsService.delete(campName);
+//        return ResponseEntity.ok(campName);
+//    }
 }
 
 

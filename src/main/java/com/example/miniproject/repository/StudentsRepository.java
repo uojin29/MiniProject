@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface StudentsRepository extends JpaRepository<Students, Long> {
-    Students findByCampName(String campName);
-    Students deleteByCampName(String campName);
+    List<Students> findAllByCampName(String campName);
+//    Students deleteByCampName(String campName);
 }

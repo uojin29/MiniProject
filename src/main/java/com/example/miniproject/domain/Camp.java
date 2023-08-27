@@ -1,5 +1,6 @@
 package com.example.miniproject.domain;
 
+import com.example.miniproject.dto.request.CampRequest;
 import com.example.miniproject.dto.request.StudentsRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,29 +18,32 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Students {
+public class Camp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "studentId")
-    private int studentId;
-    private String name;
-    private String department;
-    @Column(name = "campName")
     private String campName;
 
+    private String fee;
+
+    private String profName;
+
+    private String startDate;
+
+    private String finishDate;
+
     @CreationTimestamp
-    @Column(name = "regDate")
     private LocalDateTime regDate;
 
-    public void update(StudentsRequest request) {
-        this.name = request.getName();
-        this.department = request.getDepartment();
-        this.studentId = request.getStudentId();
+    public void update(CampRequest request) {
+        this.campName = request.getCampName();
+        this.fee = request.getFee();
+        this.profName = request.getProfName();
+        this.startDate = request.getStartDate();
+        this.finishDate = request.getFinishDate();
     }
 
-    @OneToMany(mappedBy = "students")
+    @OneToMany(mappedBy = "camp")
     private List<CampStudents> campStudents = new ArrayList<>();
 }
