@@ -20,6 +20,7 @@ public class CampController {
     @PostMapping("/camp")
     public void camp(@RequestBody CampRequest request){
         campService.create(request);
+
     }
 
     @GetMapping("/camp/{id}")

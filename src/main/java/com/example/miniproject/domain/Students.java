@@ -28,6 +28,7 @@ public class Students {
     private int studentId;
     private String name;
     private String department;
+
     @Column(name = "campName")
     private String campName;
 
